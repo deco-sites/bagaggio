@@ -52,7 +52,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
   } = image;
 
   return (
-    <div class="relative h-[600px] min-w-[100vw] overflow-y-hidden">
+    <div class="relative min-w-[100vw] overflow-y-hidden">
       <a href={action?.href ?? "#"} aria-label={action?.label}>
         <Picture class="w-full" preload={lcp}>
           <Source
@@ -60,7 +60,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
             fetchPriority={lcp ? "high" : "auto"}
             src={mobile}
             width={360}
-            height={600}
+            height={252}
           />
           <Source
             media="(min-width: 1025px)"
@@ -76,50 +76,19 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
             alt={alt}
           />
         </Picture>
-        
       </a>
-
-          
     </div>
-
   );
 }
 
 function ProgressiveDots({ images, interval = 0 }: Props) {
   return (
     <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @property --dot-progress {
-            syntax: '<percentage>';
-            inherits: false;
-            initial-value: 0%;
-          }`,
-        }}
-      >
-      </style>
-      <SliderDots class="col-span-full gap-4 z-10 row-start-4">
+      <SliderDots class="col-span-full gap-2 z-10 row-start-4">
         {images?.map((_) => (
           <div class="py-6">
             <div
-              class={tw`group-disabled:${
-                animation(
-                  `${interval}s ease-out 1 forwards`,
-                  keyframes`
-                          from: {
-                            --dot-progress: 0%;
-                          }
-                          to {
-                            --dot-progress: 100%;
-                          }
-                        `,
-                )
-              } w-16 sm:w-20 h-0.5 rounded`}
-              style={{
-                background:
-                  "linear-gradient(to right, #FFFFFF var(--dot-progress), rgba(255, 255, 255, 0.4) var(--dot-progress))",
-              }}
+              class={tw`group-disabled:bg-dot border border-dot bg-white w-3 h-3 rounded-full`}
             />
           </div>
         ))}
@@ -131,33 +100,33 @@ function ProgressiveDots({ images, interval = 0 }: Props) {
 function Controls() {
   return (
     <>
-      <div class="flex items-center justify-center z-10 col-start-1 row-start-2">
+      <div class="flex items-center justify-center md:justify-end z-10 col-start-1 row-start-2">
         <Button
-          class="h-12 w-12"
+          class="h-7 w-7 md:(h-14 w-14) !bg-[#FFFFFF95] rounded-full shadow-lg "
           variant="icon"
           data-slide="prev"
           aria-label="Previous item"
         >
           <Icon
-            class="text-default-inverse"
-            size={20}
+            class="text-[#797979] text-xl"
+            size={26}
             id="ChevronLeft"
-            strokeWidth={3}
+            strokeWidth={2}
           />
         </Button>
       </div>
-      <div class="flex items-center justify-center z-10 col-start-3 row-start-2">
+      <div class="flex items-center justify-center md:!justify-start z-10 col-start-3 row-start-2">
         <Button
-          class="h-12 w-12"
+          class="h-7 w-7 md:(h-14 w-14) !bg-[#FFFFFF] rounded-full shadow-lg"
           variant="icon"
           data-slide="next"
           aria-label="Next item"
         >
           <Icon
-            class="text-default-inverse"
-            size={20}
+            class="text-[#797979]"
+            size={26}
             id="ChevronRight"
-            strokeWidth={3}
+            strokeWidth={2}
           />
         </Button>
       </div>
@@ -171,7 +140,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
   return (
     <div
       id={id}
-      class="grid grid-cols-[48px_1fr_48px] sm:grid-cols-[120px_1fr_120px] grid-rows-[1fr_48px_1fr_48px]"
+      class="grid grid-cols-[48px_1fr_48px] sm:grid-cols-[180px_1fr_180px] grid-rows-[1fr_48px_1fr_48px]"
     >
       <Slider class="col-span-full row-span-full scrollbar-none gap-6">
         {images?.map((image, index) => (

@@ -34,7 +34,7 @@ type SliderDotsProps = JSX.IntrinsicElements["ol"];
 export function SliderDots({ children, class: _class }: SliderDotsProps) {
   return (
     <ol
-      class={`flex items-center justify-center overflow-auto overscroll-contain snap-x snap-mandatory ${_class}`}
+      class={`flex items-center justify-center snap-x snap-mandatory ${_class}`}
     >
       {Children.map(children, (child, index) => (
         <li class="scroll-snap-center">
