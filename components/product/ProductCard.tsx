@@ -53,94 +53,81 @@ function ProductCard({ product, preload, itemListName }: Props) {
   const {
     url,
     productID,
+    isVariantOf,
     name,
     image: images,
     offers,
   } = product;
   const [front, back] = images ?? [];
   const { listPrice, price, seller } = useOffer(offers);
+  const isOnSale = listPrice !== price;
+  const saleDiscount = price?.toString() && listPrice?.toString() && Math.round(
+    ((listPrice - price) / listPrice) * 100,
+  );
 
   return (
     <div
       data-deco="view-product"
       id={`product-card-${productID}`}
-      class="w-full group"
+      class="sm:border sm:border-transparent w-full sm:group hover:border-[#cccccc] duration-300 rounded p-2"
     >
-      <a href={url} aria-label="product link">
+      <a href={url} aria-label="product link" class="relative">
+        {isOnSale && (
+          <div class="bg-[#292929] rounded flex flex-col w-[45px] h-[45px] absolute top-0 left-0 z-10 items-center justify-center">
+            <span class="text-white font-bold text-sm">
+              {saleDiscount}%
+            </span>
+            <span class="text-white text-xs">OFF</span>
+          </div>
+        )}
         <div class="relative w-full">
           <Image
             src={front.url!}
             alt={front.alternateName}
             width={200}
-            height={279}
-            class="rounded w-full group-hover:hidden"
+            height={200}
+            class="rounded w-full opacity-100 sm:group-hover:opacity-0 transition-opacity duration-100"
             preload={preload}
             loading={preload ? "eager" : "lazy"}
-            sizes="(max-width: 640px) 50vw, 20vw"
           />
           <Image
             src={back?.url ?? front.url!}
             alt={back?.alternateName ?? front.alternateName}
             width={200}
-            height={279}
-            class="rounded w-full hidden group-hover:block"
-            sizes="(max-width: 640px) 50vw, 20vw"
+            height={200}
+            class="rounded w-full absolute top-0 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-100"
           />
-          {seller && (
-            <div
-              class="absolute bottom-0 hidden sm:group-hover:flex flex-col gap-2 w-full p-2 bg-opacity-10"
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.2)",
-                backdropFilter: "blur(2px)",
-              }}
-            >
-              <Sizes {...product} />
-              <Button as="a" href={product.url}>Visualizar Produto</Button>
-              {/* FIXME: Understand why fresh breaks rendering this component */}
-              {
-                /* <SendEventButton
-                as="a"
-                href={product.url}
-                event={{
-                  name: "select_item",
-                  params: {
-                    item_list_name: itemListName,
-                    items: [
-                      mapProductToAnalyticsItem({
-                        product,
-                        price,
-                        listPrice,
-                      }),
-                    ],
-                  },
-                }}
-              >
-                Visualizar Produto
-              </SendEventButton> */
-              }
-            </div>
-          )}
         </div>
 
-        <div class="flex flex-col gap-1 py-2">
-          <Text
-            class="overflow-hidden overflow-ellipsis whitespace-nowrap"
-            variant="caption"
-          >
-            {name}
-          </Text>
-          <div class="flex items-center gap-2">
+        <div class="flex flex-col py-2 leading-none">
+          <div class="h-[70px] flex flex-col justify-between">
             <Text
-              class="line-through"
-              variant="list-price"
-              tone="subdued"
+              class="overflow-hidden overflow-ellipsis"
+              variant="caption"
             >
-              {formatPrice(listPrice, offers!.priceCurrency!)}
+              {isVariantOf?.name}
             </Text>
-            <Text variant="caption" tone="price">
-              {formatPrice(price, offers!.priceCurrency!)}
-            </Text>
+            <div class="flex gap-2 items-center">
+              {isOnSale && (
+                <Text class="line-through text-[#777] font-bold text-sm">
+                  {formatPrice(listPrice, offers!.priceCurrency!)}
+                </Text>
+              )}
+              <Text class="text-base font-black font-bold">
+                {formatPrice(price, offers!.priceCurrency!)}
+              </Text>
+            </div>
           </div>
+          <span class="text-gray-800 dark:text-gray-400 text-xs">
+            ou 6x de {formatPrice(price! / 6, offers!.priceCurrency!)}
+          </span>
+          {seller && (
+            <div class="hidden opacity-0 sm:flex sm:group-hover:opacity-100 transition-opacity duration-300 sm:group-hover:visible flex-col gap-2 w-full p-2 bg-opacity-10">
+              <Button class="" variant="alternative" as="a" href={product.url}>
+                COMPRAR
+              </Button>
+            </div>
+          )}
         </div>
       </a>
     </div>
