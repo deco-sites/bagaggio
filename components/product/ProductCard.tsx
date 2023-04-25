@@ -8,6 +8,7 @@ import type { Product } from "deco-sites/std/commerce/types.ts";
 import SendEventButton from "deco-sites/fashion/islands/SendEventButton.tsx";
 import { mapProductToAnalyticsItem } from "deco-sites/std/commerce/utils/productToAnalyticsItem.ts";
 import Button from "../ui/Button.tsx";
+import Icon from "deco-sites/fashion/components/ui/Icon.tsx";
 
 /**
  * A simple, inplace sku selector to be displayed once the user hovers the product card
@@ -72,14 +73,20 @@ function ProductCard({ product, preload, itemListName }: Props) {
       class="sm:border sm:border-transparent w-full sm:group hover:border-[#cccccc] duration-300 rounded p-2"
     >
       <a href={url} aria-label="product link" class="relative">
-        {isOnSale && (
-          <div class="bg-[#292929] rounded flex flex-col w-[45px] h-[45px] absolute top-0 left-0 z-10 items-center justify-center">
-            <span class="text-white font-bold text-sm">
-              {saleDiscount}%
-            </span>
-            <span class="text-white text-xs">OFF</span>
+        <div class="flex flex-col absolute top-0 left-0 z-10  items-end">
+          {isOnSale && (
+            <div class="bg-[#292929] rounded flex flex-col w-[45px] h-[45px] items-center justify-center">
+              <span class="text-white font-bold text-sm">
+                {saleDiscount}%
+              </span>
+              <span class="text-white text-xs">OFF</span>
+            </div>
+          )}
+          <div class="bg-[#9b9595] mt-1 rounded flex gap-[1px] p-[1px] w-[60px]">
+            <Icon size={21} id="AirplaneIcon" class="" />
+            <span class="text-white text-[9px] font-bold mt-[3px]">BORDO</span>
           </div>
-        )}
+        </div>
         <div class="relative w-full">
           <Image
             src={front.url!}
