@@ -102,7 +102,7 @@ function Controls() {
     <>
       <div class="flex items-center justify-center md:justify-end z-10 col-start-1 row-start-2 md:row-start-3">
         <Button
-          class="h-8 w-8 md:h-16 md:w-16 !bg-[#FFFFFF95] rounded-full shadow-lg "
+          class="h-8 w-8 md:h-16 md:w-16 !bg-[#FFFFFF95] rounded-full shadow-lg"
           variant="icon"
           data-slide="prev"
           aria-label="Previous item"
@@ -111,7 +111,7 @@ function Controls() {
             class="text-[#797979] text-xl"
             size={32}
             id="ChevronLeft"
-            strokeWidth={2}
+            strokeWidth={1.5}
           />
         </Button>
       </div>
@@ -123,10 +123,10 @@ function Controls() {
           aria-label="Next item"
         >
           <Icon
-            class="text-[#797979]"
+            class="text-[#797979] text-xl"
             size={32}
             id="ChevronRight"
-            strokeWidth={2}
+            strokeWidth={1.5}
           />
         </Button>
       </div>

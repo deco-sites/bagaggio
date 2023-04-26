@@ -31,7 +31,7 @@ function Controls() {
           aria-label="Previous item"
         >
           <Icon
-            class=""
+            class="sm:text-[#797979] sm:text-xl"
             size={32}
             id="ChevronLeft"
             strokeWidth={1.5}
@@ -46,7 +46,7 @@ function Controls() {
           aria-label="Next item"
         >
           <Icon
-            class=""
+            class="sm:text-[#797979] sm:text-xl"
             size={32}
             id="ChevronRight"
             strokeWidth={1.5}
